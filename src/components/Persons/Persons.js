@@ -2,7 +2,7 @@ import React from 'react';
 
 const persons = () => {
   persons.map((person, index) => {
-    return <Person 
+    return <Person
     click={() => this.deletePersonHandler(index)}
     name={person.name}
     age={person.age} 
