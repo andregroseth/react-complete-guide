@@ -1,4 +1,4 @@
-import React form 'react';
+import React from 'react';
 
 const persons = () => {
   persons.map((person, index) => {
