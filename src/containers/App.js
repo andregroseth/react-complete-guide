@@ -19,7 +19,8 @@ class App extends Component {
       { id: '003', name: 'Stephanie', age: 26 }
     ],
     otherState: 'some other value',
-    showPersons: false
+    showPersons: false,
+    showCockpit: true
 
   }
 
@@ -43,6 +44,10 @@ class App extends Component {
 
   componentDidUpdate() {
     console.log('[App.js] componentDidUpdate');
+  }
+
+  componentWillUnmount () {
+    console.log('[Persons.js] componentWillUnmount');
   }
 
   nameChangedHandler = (event, id) => {
@@ -90,11 +95,21 @@ class App extends Component {
     return (
              //</div><div className={classes.App}>
       <div className="App">
+        <button 
+        onClick={() => {
+          this.setState({ showCockpit: false });
+        }}
+        >
+        Remove Cockpit
+        </button>
+      {this.state.showCockpit ? (
         <Cockpit
-        title={this.props.appTitle}
-        showPersons={this.state.showPersons}
-        persons={this.state.persons} 
-        clicked={this.togglePersonsHandler} />
+          title={this.props.appTitle}
+          showPersons={this.state.showPersons}
+          persons={this.state.persons} 
+          clicked={this.togglePersonsHandler}
+          />
+      ) : null}
         {persons}
       </div>
     );
