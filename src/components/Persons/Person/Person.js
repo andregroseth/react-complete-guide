@@ -1,15 +1,27 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Aux from '../../../hoc/Aux';
 import classes from './Person.css';
 
-const person = (props) => {
-  console.log('[Person.js] rendering...');
-  return (
-    <div className={classes.Person}>
-      <p onClick={props.click}>i´m {props.name} and i am {props.age} years old.</p>
-      <p>{props.children}</p>
-      <input type='text' onChange={props.changed} value={props.name}/>
-    </div>
-  )
+class Person extends Component {
+
+
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+      <Aux>
+        <p key="i1" onClick={this.pros.click}>
+          i´m {this.pros.name} and i am {this.pros.age} years old.
+          </p>
+        <p key="i2">{this.pros.children}</p>
+        <input
+          key="i3"
+          type='text'
+          onChange={this.pros.changed}
+          value={this.pros.name}
+        />
+      </Aux>
+    );
+  }
 }
 
-export default person;
+export default Person;
