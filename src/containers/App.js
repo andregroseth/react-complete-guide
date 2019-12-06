@@ -4,7 +4,6 @@ import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import withClass from '../hoc/withClass';
 import './App.css';
-import withClass from '../hoc/withClass';
 import Aux from '../hoc/Aux';
 
 
@@ -23,9 +22,9 @@ class App extends Component {
     ],
     otherState: 'some other value',
     showPersons: false,
-    showCockpit: true
-
-  }
+    showCockpit: true,
+    changeCounter: 0
+  };
 
   static getDerivedStateFromProps(props, state) {
     console.log('[App.js] getDerivedStateFromProps', props);
@@ -49,7 +48,7 @@ class App extends Component {
     console.log('[App.js] componentDidUpdate');
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     console.log('[Persons.js] componentWillUnmount');
   }
 
@@ -62,57 +61,62 @@ class App extends Component {
       ...this.state.persons[personIndex]
     };
 
-   // const person = Object.assign({}, this.state.persons[personIndex]);
+    // const person = Object.assign({}, this.state.persons[personIndex]);
 
-   person.name = event.target.value;
+    person.name = event.target.value;
 
-   const persons = [...this.state.persons];
-   persons[personIndex] = person;
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
 
-    this.setState( {persons: persons} )
-  }
+    this.setState((prevState, props) => {
+      return {
+        persons: persons,
+        changeCounter: this.state.changeCounter + 1
+      };
+    });
+  };
 
   deletePersonHandler = (personIndex) => {
     //const persons = this.state.persons.slice();
     const persons = [...this.state.persons];
-    persons.splice(personIndex,1);
-    this.setState({persons: persons});
+    persons.splice(personIndex, 1);
+    this.setState({ persons: persons });
   }
 
   togglePersonsHandler = () => {
     const doesShow = this.state.showPersons;
-    this.setState({showPersons: !doesShow});
+    this.setState({ showPersons: !doesShow });
   }
- 
+
   render() {
     console.log('[App.js] render');
     let persons = null;
-    
+
     if (this.state.showPersons) {
       persons = <Persons
-            persons={this.state.persons}
-            clicked={this.deletePersonHandler}
-            changed={this.nameChangedHandler} />;
+        persons={this.state.persons}
+        clicked={this.deletePersonHandler}
+        changed={this.nameChangedHandler} />;
     }
 
     return (
-             //</div><div className={classes.App}>
+      //</div><div className={classes.App}>
       <withClass classes="App">
-        <button 
-        onClick={() => {
-          this.setState({ showCockpit: false });
-        }}
+        <button
+          onClick={() => {
+            this.setState({ showCockpit: false });
+          }}
         >
-        Remove Cockpit
+          Remove Cockpit
         </button>
-      {this.state.showCockpit ? (
-        <Cockpit
-          title={this.props.appTitle}
-          showPersons={this.state.showPersons}
-          personsLength={this.state.persons.length} 
-          clicked={this.togglePersonsHandler}
+        {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
           />
-      ) : null}
+        ) : null}
         {persons}
       </withClass>
     );
