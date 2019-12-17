@@ -20,6 +20,7 @@ constructor(props) {
     console.log('[Person.js] rendering...');
     return (
       <Aux>
+        {this.props.isAuth ? <p>Authenitcated!</p> : <p>Please log in</p>}
         <p key="i1" onClick={this.pros.click}>
           i´m {this.pros.name} and i am {this.pros.age} years old.
           </p>
